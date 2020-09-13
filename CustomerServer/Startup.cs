@@ -20,6 +20,14 @@ namespace CustomerServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                var allowedOrigins = Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? new string[0];
+
+                options.AddPolicy(name: "CustomerInternal",
+                                builder => builder.WithOrigins(allowedOrigins));
+            });
+
             services.Configure<CustomersDatabaseSettings>(
             Configuration.GetSection(nameof(CustomersDatabaseSettings)));
 
@@ -28,7 +36,7 @@ namespace CustomerServer
 
             services.AddSingleton<CustomerService>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +45,8 @@ namespace CustomerServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CustomerInternal");
 
             app.UseHttpsRedirection();
 

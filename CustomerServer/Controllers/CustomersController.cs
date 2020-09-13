@@ -21,7 +21,7 @@ namespace CustomerServer.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Customer>> Get() => _customerService.Get();
+        public ActionResult<List<Customer>> Get() => Ok(_customerService.Get());
 
         [HttpGet("{id:length(24)}", Name = "GetCustomer")]
         public ActionResult<Customer> Get(string id)
@@ -33,7 +33,7 @@ namespace CustomerServer.Controllers
                 return NotFound();
             }
 
-            return customer;
+            return Ok(customer);
         }
 
         [HttpPost]
