@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace CustomerServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
         private readonly CustomerService _customerService;
