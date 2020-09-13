@@ -1,4 +1,5 @@
 using CustomerServer.Models;
+using CustomerServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,8 @@ namespace CustomerServer
 
             services.AddSingleton<ICustomersDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<CustomersDatabaseSettings>>().Value);
+
+            services.AddSingleton<CustomerService>();
 
             services.AddControllers();
         }
