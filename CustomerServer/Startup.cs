@@ -22,10 +22,8 @@ namespace CustomerServer
         {
             services.AddCors(options =>
             {
-                var allowedOrigins = Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? new string[0];
-
                 options.AddPolicy(name: "CustomerInternal",
-                                builder => builder.WithOrigins(allowedOrigins));
+                                builder => builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             });
 
             services.Configure<CustomersDatabaseSettings>(
