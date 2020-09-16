@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  customer-api:
+    image: customerserver
+    build:
+      context: .
+      dockerfile: CustomerServer/customers-api.dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - customers-network
+
+  customers-db:
+    image: mongo
+    ports:
+      - "27017-27019:27017-27019"
+    volumes:
+      - /data/db
+    networks:
+      - customers-network
+
+networks:
+  customers-network:
+    driver: bridge
